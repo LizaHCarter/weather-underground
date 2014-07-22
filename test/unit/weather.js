@@ -97,4 +97,14 @@ describe('Weather', function(){
       });
     });
   });
+  describe('.moon', function(){
+    it('should list current moon phase', function(done){
+      Weather.moon('37217', function(moon){
+        expect(moon).to.be.ok;
+        expect(moon).to.equal('crescent');
+        done();
+        console.log(moon);
+      });
+    });
+  });
 });

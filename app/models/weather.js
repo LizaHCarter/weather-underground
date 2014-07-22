@@ -1,3 +1,4 @@
+/*jshint camelcase:false*/
 'use strict';
 var Calc = require('../../../calculator/app/models/calc');
 var request = require('request');
@@ -143,4 +144,30 @@ Weather.deltas= function(zip, cb){
   });
 };
 
+Weather.moon = function(zip, cb){
+  var url = 'http://api.wunderground.com/api/6904868a2f38a2ae/astronomy/q/'+zip+'.json';
+  
+  request(url, function(error, response, body){
+    body = JSON.parse(body);
+    var moon = parseInt(body.moon_phase.percentIlluminated);
+  
+    if(moon<= 5){
+      moon = 'new';
+ 
+    }else if(moon<= 44){
+      moon = 'crescent';
+
+    }else if(moon<= 55){
+      moon = 'quarter';
+
+    }else if(moon<=94){
+      moon = 'gibbous';
+
+    }else{
+      moon = 'full';
+
+    }
+    cb(moon);
+  });
+};
 module.exports = Weather;
